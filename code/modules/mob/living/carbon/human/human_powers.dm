@@ -256,3 +256,40 @@
 		M.apply_damage(30,BRUTE)
 		if(M.stat == 2)
 			M.gib()
+
+/mob/living/carbon/human/proc/symbiotesay(msg as text)
+	set category = "Abilites"
+	set name = "Symbiote Say"
+	set desc = "Use the bug inside of you!"
+
+	if(!internal_organs_by_name["symbiote"])
+		msg_scopes("No symbiote.")
+		src << "No symbiote."
+		return
+
+	if(!msg)
+		msg_scopes("No msg.")
+		return
+
+	var/datum/organ/internal/symbiote/symbiote = internal_organs_by_name["symbiote"]
+
+	if(!symbiote.emotions)
+		msg_scopes("No emotions.")
+		return
+
+	//Let the word processing begin!
+	msg = lowertext(msg)
+	var/list/words = text2list(msg, " ")
+	var/list/message = list()
+
+	for(var/C in words)
+		for(var/A in symbiote.emotions["Emotions"])
+			var/list/haystack = symbiote.emotions["[A]"]
+			var/Found = haystack.Find("[C]")
+			if(Found)
+				message += A
+
+	msg_scopes_list(message)
+
+	for(var/datum/organ/internal/symbiote/target in symbiotes)
+		target.receive(message, symbiote)
