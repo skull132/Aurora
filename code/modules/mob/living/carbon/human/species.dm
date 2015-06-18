@@ -286,6 +286,22 @@
 
 	reagent_tag = IS_SKRELL
 
+	inherent_verbs = list(
+		/mob/living/carbon/human/proc/symbiotesay
+		)
+
+	has_organ = list(
+		"heart" =    /datum/organ/internal/heart,
+		"lungs" =    /datum/organ/internal/lungs,
+		"liver" =    /datum/organ/internal/liver,
+		"kidneys" =  /datum/organ/internal/kidney,
+		"brain" =    /datum/organ/internal/brain,
+		"appendix" = /datum/organ/internal/appendix,
+		"eyes" =     /datum/organ/internal/eyes,
+		"symbiote" = /datum/organ/internal/symbiote
+		)
+
+
 /datum/species/vox
 	name = "Vox"
 	name_plural = "Vox"
