@@ -51,27 +51,47 @@ var/list/symbiotes = list()
 //			msg_scopes("Src received!")
 //			return
 
-		var/list/signals[0]
-		var/i	//count measure, basically
-		var/D	//memory space, needed
+		owner.emotionoverlay.overlays = list()
+
+		var/skip		//Memory space to skip iterations.
+		var/strength	//Strength of the signal received.
+		var/i			//Iteration counter. Easiest to use right now.
+		var/flick		//For storing the length of the image, mostly testing.
 		for(var/B in message)
 			i++
-			//first iteration skips this check
-			if(i > 1)
-				//If we find that the current element matches the last element
-				if(D == B)
-					var/list/C = signals.Copy(length(signals))	//Should already be the final member, so second argument not necessary
-					C["B"]++
-					msg_scopes_list(C)
-					msg_scopes("Equals: [C["B"]]")
-				//Otherwise we just add another signal with a strength of 1
-				else
-					signals += list("[B]" = 1)
-			else
-				//The initial signal comes with a strength of 1
-				//This is after the first iteration
-				signals += list("[B]" = 1)
-				D = B
+			strength = 1
+			//If we are due to skip an iteration, then we do so.
+			if(skip)
+				skip--
+				continue
+			//Now for the culmination of strength.
+			if(i + 1 <= message.len && message[i + 1] == B)
+				strength++
+				skip++
+				if(i + 2 <= message.len && message[i + 2] == B)
+					strength++
+					skip++
+			//Switch array for doing the effect.
+			var/image/I = image("icon" = 'icons/mob/screen1_full.dmi', "icon_state" = "emotion-[B]-[strength]")
+			owner.emotionoverlay.overlays += I
+			switch(strength)
+				if(1)
+					owner << "You feel slight [B]."
+					flick = 5
+				if(2)
+					owner << "You feel [B]."
+					flick = 10
+				if(3)
+					owner << "You feel a lot of [B]."
+					owner.emotionoverlay.layer = 18.2	//Strong emotion overpowers paaaaain!
+					flick = 15
+
+			msg_scopes("wait. Flick = [flick]")
+			spawn(flick)
+				msg_scopes("wait over")
+				//Now we reset all the things for the next iteration!
+				owner.emotionoverlay.layer = 18
+				owner.emotionoverlay.overlays -= I
 
 /obj/item/organ/symbiote
 	name = "Skrell symbiote"
