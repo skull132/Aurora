@@ -84,6 +84,9 @@
 	if(organ_data.robotic >= 2)
 		roboticize()
 
+	if(!organ_data.organ_holder)
+		organ_data.organ_holder = src
+
 // Brain is defined in brain_item.dm.
 /obj/item/organ/heart
 	name = "heart"
