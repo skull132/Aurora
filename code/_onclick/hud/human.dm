@@ -428,14 +428,6 @@
 	mymob.damageoverlay.mouse_opacity = 0
 	mymob.damageoverlay.layer = 18.1 //The black screen overlay sets layer to 18 to display it, this one has to be just on top.
 
-	mymob.emotionoverlay = new /obj/screen()
-	mymob.emotionoverlay.icon = 'icons/mob/screen1_full.dmi'
-	mymob.emotionoverlay.icon_state = "emotionoverlay0"
-	mymob.emotionoverlay.name = "emotion"
-	mymob.emotionoverlay.screen_loc = "1,1"
-	mymob.emotionoverlay.mouse_opacity = 0
-	mymob.emotionoverlay.layer = 18 //Will be dynamic. Weee.
-
 	mymob.flash = new /obj/screen()
 	mymob.flash.icon = ui_style
 	mymob.flash.icon_state = "blank"
@@ -476,7 +468,7 @@
 
 	mymob.client.screen = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, mymob.emotionoverlay, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.pressure, mymob.toxin, mymob.bodytemp, mymob.internals, mymob.fire, mymob.healths, mymob.nutrition_icon, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, mymob.gun_setting_icon) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.hotkeybuttons
 	inventory_shown = 0;
 
